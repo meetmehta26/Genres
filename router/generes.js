@@ -14,8 +14,6 @@ const schema = new mongoose.Schema({
 })
 const Genere = mongoose.model('generes', schema);
 async function createData(name1) {
-
-
     const genere = Genere({
         name: name1
     })
@@ -23,26 +21,7 @@ async function createData(name1) {
     console.log(result);
     return result;
 }
-// async function findbyID(){
-//     const Genere = mongoose.model('generes', schema);
-//     const genere = Genere({
-//         name: name1
-//     })
-//     const result=await genere.save();
-//     console.log(result);
-//     return result;
 
-// }
-
-
-
-
-// var generes = [
-//     { id: 1, name: "generes1" },
-//     { id: 2, name: "generes2" },
-//     { id: 3, name: "generes3" },
-//     { id: 4, name: "generes4" },
-// ]
 
 router.get('/', async (req, res) => {
     const generes = await Genere.find();
@@ -65,15 +44,14 @@ router.put('/:id', async (req, res) => {
     const result = await genere.save();
     res.status(200).send(result);
 })
-router.delete('/:id', (req, res) => {
-    const genere = generes.find(s => s.id === parseInt(req.params.id));
+router.delete('/:id', async(req, res) => {
+    const genere= await Genere.findByIdAndRemove(req.params.id,);
     if (!genere) { return res.status(404).send('Resource Not found'); }
-    const index = generes.indexOf(genere);
-    generes.splice(index, 1);
-    res.send(genere);
+    res.status(200).send(genere);
 })
-router.get('/:id', (req, res) => {
-    const genere = generes.find(s => s.id === parseInt(req.params.id));
+router.get('/:id', async(req, res) => {
+    // const genere = generes.find(s => s.id === parseInt(req.params.id));
+    const genere= await Genere.findById(req.params.id)
     if (!genere) { return res.status(404).send('Resource Not found'); }
     res.status(200).send(genere);
 })

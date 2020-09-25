@@ -8,8 +8,8 @@ const schema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        min: 4,
-        max: 50
+        minlength: 4,
+        maxlength: 50
     },
 })
 const Genere = mongoose.model('generes', schema);
@@ -32,7 +32,6 @@ router.post('/', async (req, res) => {
     const { error } = validateGenre(req.body);
     if (error) { return res.status(400).send(error.details[0].message) }
     const data = await createData(req.body.name)
-    console.log("DATA", data);
     res.status(200).send("Successfully added the data");
 })
 
@@ -44,14 +43,14 @@ router.put('/:id', async (req, res) => {
     const result = await genere.save();
     res.status(200).send(result);
 })
-router.delete('/:id', async(req, res) => {
-    const genere= await Genere.findByIdAndRemove(req.params.id,);
+router.delete('/:id', async (req, res) => {
+    const genere = await Genere.findByIdAndRemove(req.params.id,);
     if (!genere) { return res.status(404).send('Resource Not found'); }
     res.status(200).send(genere);
 })
-router.get('/:id', async(req, res) => {
+router.get('/:id', async (req, res) => {
     // const genere = generes.find(s => s.id === parseInt(req.params.id));
-    const genere= await Genere.findById(req.params.id)
+    const genere = await Genere.findById(req.params.id)
     if (!genere) { return res.status(404).send('Resource Not found'); }
     res.status(200).send(genere);
 })

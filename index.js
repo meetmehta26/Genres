@@ -1,6 +1,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi')
 const generes = require('./router/generes');
+const customer= require('./router/customer');
 const mongoose = require('mongoose');
 const app = express();
 
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://localhost/Vidly')
 
 app.use(express.json());
 app.use('/api/generes',generes);
+app.use('/api/customer',customer);
 
 
 var port = process.env.PORT|| 8000;

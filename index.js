@@ -1,7 +1,7 @@
 const express = require('express');
 const Joi = require('@hapi/joi')
 const generes = require('./router/generes');
-const customer= require('./router/customer');
+const customer= require('./router/customers');
 const mongoose = require('mongoose');
 const app = express();
 

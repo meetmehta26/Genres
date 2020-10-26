@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Movie,validate,createData}= require('../models/movie.js')
+const {Movie,validate,createData}= require('../models/movie')
 
 
 router.get('/', async (req, res) => {

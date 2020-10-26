@@ -3,6 +3,7 @@ const Joi = require('@hapi/joi')
 const generes = require('./router/generes');
 const customer= require('./router/customers');
 const movie= require('./router/movies');
+const users = require('./router/users')
 const mongoose = require('mongoose');
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/generes',generes);
 app.use('/api/customer',customer);
 app.use('/api/movie',movie);
+app.use('/api/users',users);
 
 
 var port = process.env.PORT|| 8000;

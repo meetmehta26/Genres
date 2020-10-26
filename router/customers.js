@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Customer,validate} = require('../models/customer.js')
+const {Customer,validate} = require('../models/customer')
 
 
 

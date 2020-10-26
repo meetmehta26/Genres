@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Genere,validate,createData}= require('../models/genere.js')
+const {Genere,validate,createData}= require('../models/genere')
 
 
 router.get('/', async (req, res) => {

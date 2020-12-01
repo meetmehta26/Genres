@@ -1,5 +1,8 @@
 const router = require('express').Router();
-const {User,validate,}= require('../models/user')
+const {User,validate}= require('../models/user')
+const bcrypt = require ('bcryptjs');
+const _ = require('lodash');
+
 
 
 router.post('/', async (req, res) => {
@@ -10,18 +13,17 @@ router.post('/', async (req, res) => {
     if(user){
         return res.status(400).send('User already exists');    
     }
+    const salt = await bcrypt.genSaltSync(10);
+    const hashed = await bcrypt.hash(req.body.password,salt);
     user = new User({
         name : req.body.name,
         email : req.body.email,
-        password : req.body.password,
+        password : hashed,
 
     })
-    const salt = await bcrypt.genSaltSync(10);
-    const hashed = await bcrypt.hash(user.password,salt);
-    user.password=  hashed;
     await user.save();
    
-    res.status(200).send(user);
+    res.status(200).send(_.pick(user,['_id','name','email']));
 })
 
 module.exports = router;

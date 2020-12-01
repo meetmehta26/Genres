@@ -1,4 +1,6 @@
 const router = require('express').Router();
+require("dotenv").config()
+const jwt = require('jsonwebtoken');
 const {User,validate}= require('../models/user')
 const bcrypt = require ('bcryptjs');
 const _ = require('lodash');
@@ -22,8 +24,9 @@ router.post('/', async (req, res) => {
 
     })
     await user.save();
+    const token = user.generateAuthenticationToken()
    
-    res.status(200).send(_.pick(user,['_id','name','email']));
+    res.status(200).header('x-auth-token', token).send(_.pick(user,['_id','name','email']));
 })
 
 module.exports = router;

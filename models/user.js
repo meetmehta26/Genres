@@ -1,8 +1,9 @@
 const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-
-const User = mongoose.model('Users', new mongoose.Schema({
+userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -14,7 +15,7 @@ const User = mongoose.model('Users', new mongoose.Schema({
         required: true,
         minlength: 4,
         maxlength: 250,
-        unique : true
+        unique: true
     },
     password: {
         type: String,
@@ -22,7 +23,16 @@ const User = mongoose.model('Users', new mongoose.Schema({
         minlength: 4,
         maxlength: 1024,
     },
-}));
+})
+
+userSchema.methods.generateAuthenticationToken = function () {
+    const token = jwt.sign({ _id: this._id }, process.env.jwtprivatekeymeet)
+    return token
+
+
+}
+
+const User = mongoose.model('Users', userSchema);
 function validateUser(user) {
     const schema = {
         name: Joi.string().min(5).max(50).required(),
@@ -34,5 +44,5 @@ function validateUser(user) {
 
 }
 
-exports.User=User;
-exports.validate= validateUser;
+exports.User = User;
+exports.validate = validateUser;

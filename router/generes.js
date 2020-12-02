@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {Genere,validate,createData}= require('../models/genere')
 const auth = require('../middleware/auth')
+const admin = require('../middleware/admin')
 
 
 router.get('/', async (req, res) => {
@@ -23,8 +24,8 @@ router.put('/:id',auth, async (req, res) => {
     const result = await genere.save();
     res.status(200).send(result);
 })
-router.delete('/:id',auth, async (req, res) => {
-    const genere = await Genere.findByIdAndRemove(req.params.id,);
+router.delete('/:id',[auth,admin], async (req, res) => {
+    const genere = await Genere.findByIdAndRemove(req.params.id);
     if (!genere) { return res.status(404).send('Resource Not found'); }
     res.status(200).send(genere);
 })

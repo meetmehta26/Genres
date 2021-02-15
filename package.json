@@ -16,8 +16,11 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
-    "mongoose": "^5.10.4"
+    "mongoose": "^5.10.4",
+    "winston": "^3.3.3",
+    "winston-logzio": "^5.1.2"
   }
 }

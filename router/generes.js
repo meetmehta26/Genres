@@ -1,19 +1,15 @@
 const router = require('express').Router();
+// const asyncMiddleware = require('../middleware/asyncMiddleware');   Async middleware function is used for error handlig at single place but now we have replaced this with the express-async-errors package
 const { Genere, validate, createData } = require('../models/genere')
 const auth = require('../middleware/auth')
 const admin = require('../middleware/admin')
 
 
-router.get('/', async (req, res,next) => {
-
-    try {
+router.get('/', auth ,async (req, res) => {
+    throw new Error("Error:could not find the data");
         const generes = await Genere.find();
         res.status(200).send(generes);
-    }
-    catch (ex) {
-        next(ex);
-        // res.status(500).send('Some problem occurred');
-    }
+    
 })
 
 router.post('/', auth, async (req, res) => {
